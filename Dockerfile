@@ -1,6 +1,7 @@
 FROM python:3.6
 
 ADD starter.py /
+ADD app /
 
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
