@@ -1,0 +1,120 @@
+html{
+    min-height: 100vh;
+}
+
+#twitter-accounts-dropdown{
+    background-color: #1dcaff;
+    border-color: #1dcaff;
+}
+
+.dropdown{
+    padding-left: 15px;
+}
+
+.top-buffer {
+    margin-top:20px;
+}
+
+.btn-submit{
+    margin-top: 8px;
+    display: block;
+}
+
+#txt-ambiguity-text{
+    /* width: 100%;
+    height: 100%; */
+    font-size: 30px;
+}
+
+#ambiguity-text{
+    width: 100%;
+    font-size: 30px;
+}
+
+
+.box {
+    width: 15px;
+    height: 15px;
+    float: left;
+    color: #ffffff;
+}
+
+.explanation {
+    margin-left: 5px;
+}
+
+#tick_icon{
+    width: 50%;
+}
+
+.fas{
+    font-size: 25px;
+    color: #ffffff;
+}
+.fa-thumbs-down{
+    transform: scale(-1, 1);
+    float: left;
+}
+
+.fa-thumbs-down{
+    float: right;
+}
+
+.selected-thumb{
+    color: #00FF00;
+    font-size: 50px;
+}
+.thumb-button{
+    padding: 15px;
+    border: none;
+    background: none;
+    background-color:#1dcaff;
+    border-radius: 50%;
+}
+.thumbs{
+    position: absolute;
+    /* right:-34%; */
+    z-index: 100;
+    width: 95%;
+    height: 75px;
+    border-radius: 50%;
+    margin-top: 5%
+}
+.fa-check{
+    margin-left: 15px;
+    margin-top: -33px;
+    color: #ffffff;
+    background-color: #37ff1d;
+    float: right;
+    border-radius: 50%;
+    padding: 20px;
+}
+
+textarea{
+    width: 100%;
+    font-size: 30px;
+}
+
+#row-ambiguity-result {
+    margin: 10px;
+    margin-top: 20px;
+}
+
+.explanationTitle {
+    font-size: larger;
+}
+
+mark {
+    padding: 0px;
+    margin-left: -2px;
+    margin-right: -2px;
+}
+
+.charSpace {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#ambiguity-counts {
+    padding: 0 45px 0 45px;
+}

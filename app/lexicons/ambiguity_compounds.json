@@ -1,0 +1,7 @@
+{
+  "ambiguous_compounds"  : {
+    "title"         : "Ambiguous Compound Nouns",
+    "description"   : "A sequence of more than two consecutive nouns may have more than one interpretation depending on the possible associations between the words.",
+    "lit_reference" : "M"
+  }
+}

@@ -1,0 +1,32 @@
+{
+    "unclear_inclusion" : {
+        "title"         : "Unclear Inclusion",
+        "description"   : "Up to with unclear inclusion.",
+        "regexp"        : "up\\sto\\s(?!.*including|excluding)",
+        "lit_reference"  : "GCK"
+    },
+    "ambiguous_plural"  : {
+        "title"         : "Ambiguous Plural",
+        "description"   : "Either language error or ambiguous plural.",
+        "regexp"        : "((?:everyone|everybody|anybody|people) .* (?:their|its))",
+        "lit_reference"  : "GCK"
+    },
+    "both" : {
+        "title"         : "Both",
+        "description"   : "At the beginning of the sentence, 'both' has a unclear reference.",
+        "regexp"        : "^both",
+        "lit_reference"  : "GCK"
+    },
+    "dangerous_plural"  : {
+        "title"         : "Dangerous Reference Plural",
+        "description"   : "Dangerous plural with ambiguous reference.",
+        "regexp"        : "(?:\\ball\\b|\\beach\\b|\\bevery\\b) .* (?:\\bhis\\b|\\bher\\b|\\bits\\b|\\btheir\\b|\\bthey\\b)",
+        "lit_reference"  : "GCK"
+    },
+    "unclear_associativity" : {
+        "title"         : "Unclear Associativity",
+        "description"   : "The combination of 'and' and 'or' leads to unclear associativity.",
+        "regexp"        : "(\\band\\b \\s (?!.*,) .* \\s \\bor\\b)|(\\bor\\b \\s (?!.*,) .* \\s \\band\\b)",
+        "lit_reference"  : "GCK"
+    }
+}

@@ -1,0 +1,31 @@
+{
+  "ambiguous_nominalization"  : {
+    "title"         : "Ambiguous Nominalization",
+    "description"   : "A nominalization means the use of the noun form of a verb which may lead to loss of information about the nominalized action(subject, time, location).",
+    "suffixes_len2" : ["ty"] ,
+    "suffixes_len3" : ["ism", "ion", "ing"],
+    "suffixes_len4" : ["ment", "ness", "ance", "ence"],
+    "hypernyms"     : ["event", "process", "act"],
+    "gerund"        : ["ing"],
+    "gerund_plural" : ["ings"],
+    "rule_exceptions" : [ "activity",
+                          "application",
+                          "navigation",
+                          "notification",
+                          "feedback",
+                          "question",
+                          "reading",
+                          "clicking",
+                          "registration",
+                          "shopping",
+                          "rating",
+                          "monitoring",
+                          "following",
+                          "selection",
+                          "shopping",
+                          "transaction",
+                          "transmission"
+                          ],
+    "lit_reference"  : "LKTKK"
+  }
+}

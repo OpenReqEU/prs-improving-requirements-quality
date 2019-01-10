@@ -1,0 +1,69 @@
+---
+swagger: "2.0"
+info:
+  title: "Improving Requirements Quality"
+  description: "This API implements existing work on improving requirements quality by identifying ambiguities in natural language text."
+  version: "2.0.0"
+  contact:
+    email: "montgomery@informatik.uni-hamburg.de"
+host: api.openreq.eu
+basePath: /prs-improving-requirements-quality
+schemes:
+ - https
+paths:
+  /check-quality:
+    post:
+      summary: "This endpoint checks the input requirements document for ambiguities using all available checking algorithms offered by this API."
+      description: "Using lexical lookups, regular expressions, and POS-tagging metrics built from published research, this endpoint looks for phrases that are likely to be ambiguous."
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: requirement
+          description: "The 'requirements' JSON object defined by the OPENREQ project."
+          schema:
+            type: object
+            properties:
+              requirements:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: "1"
+                    text:
+                      type: string
+                      example: 'The system may respond within 5 seconds.'
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "The returned JSON is a structured set of lists of all the ambiguities found, each of which is a descriptive ambiguity-found object. The structure of the returned JSON depends on the 'requirements' JSON object passed. In the example there is one requirement with id=1, and that requirement has one element with id=1, so the returned object is nested under those two ids."
+          schema:
+            type: object
+            properties:
+              1:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    text:
+                      type: string
+                      example: 'may'
+                    title:
+                      type: string
+                      example: 'Weak'
+                    description:
+                      type: string
+                      example: 'These weak words are likely to introduce ambiguity.'
+                    index_start:
+                      type: integer
+                      minimum: 0
+                      example: 11
+                    index_end:
+                      type: integer
+                      minimum: 1
+                      example: 14
+        400:
+          description: "Improper body sent. Please check the required JSON format as defined by the OPENREQ project for a set of requirements."

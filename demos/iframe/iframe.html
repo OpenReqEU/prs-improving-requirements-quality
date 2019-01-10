@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="mydiv">
+        <iframe id="iframe" src="" width="100%" height="750px"></iframe>
+    </div>
+    <script>
+        let requirementTitle = "Test Requirement";
+        let requirementText = "This is not a good requirement.";
+        // let requirementText = "It is ambiguous and confusing. Both, this and the other or also this. The system will be tested.";
+        // let requirementText = "Login functionality";
+        // let requirementText = "For evaluating the recorded training data, an evaluation software is required. This software requires the connection and the access to the clock's internal memory. The evaluation should contain measured information regarding the distance, the height, the average heart rate, and the calorie consumption.";
+        // let requirementText = "For statistical purposes, a distance measurement is necessary which needs data from a GPS sensor. This data is needed for the evaluation software and therefore stored in memory.";
+        // let requirementText = "To capture position data, a GPS sensor should be used. Through the measured position and time information, the speed and the distance can be measured.";
+        // let requirementText = "For evaluation purposes, the data should be stored in the internal memory. The memory is used for saving the measured information such as the distance, the height, the average heart rate, and the calorie consumption. The stored data in the memory will then be used by the evaluation software.";
+        // let requirementText = "The clock must have an internal timer which is used for saving the current time and the measured time during a workout. This time information is then stored in memory and used for further evaluation of the data.";
+        // let requirementText = "As evaluation after a workout, the average speed must be shown. The following statistics should be displayed: average speed and maximum speed. For measuring the average and maximum speed, time and distance have to be measured, and a storage unit for storing the data is necessary.";
+        // let requirementText = "Based on the data on height, weight, body fat, age and gender, the watch should be able to calculate the ideal BMI for a user.";
+        // let requirementText = "In order to be able to connect the watch with a computer, WLAN, Bluetooth, and infrared modules must be available.";
+        $(document).ready(function () {
+            $("#iframe").attr("src", "http://0.0.0.0:9799/?requirementTitle=" + requirementTitle + "&requirementText=" + requirementText);
+            // $("#iframe").attr("src", "http://217.172.12.199:9799/?requirementTitle=" + requirementTitle + "&requirementText=" + requirementText);
+        });
+    </script>
+</body>
+
+</html>
