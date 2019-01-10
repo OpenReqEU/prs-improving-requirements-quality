@@ -11,6 +11,4 @@ RUN python -m spacy download en
 
 COPY . .
 
-RUN python ./tests/test_all.py
-
-RUN python ./starter.py
+CMD [ "python", "./starter.py"]
