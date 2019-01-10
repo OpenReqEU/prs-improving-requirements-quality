@@ -6,7 +6,7 @@ from flask import (
 from flask_cors import CORS
 
 from app.requirement_improver import RequirementChecker
-from app.lib.requirement import Requirement
+from app.requirement import Requirement
 
 amb_api = Flask(__name__, template_folder='./demos/iframe/templates', static_folder='./demos/iframe/static')
 
