@@ -4,6 +4,7 @@ from flask import (
     Flask, request, abort, jsonify, render_template
 )
 from flask_cors import CORS
+
 from app.requirement_improver import RequirementChecker
 from app.lib.requirement import Requirement
 
