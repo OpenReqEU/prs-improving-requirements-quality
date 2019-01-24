@@ -25,7 +25,6 @@ existing work, but also how to find the original work.
 This microservice is Dockerized. With Docker installed on your machine, run the following commands to run the service:
 
 1. `docker build --no-cache -t prs-improving-requirements-quality .`
-    
     1. OR `docker build -t prs-improving-requirements-quality .` to cache
 2. `docker run -p 9799:9799 prs-improving-requirements-quality`
 
