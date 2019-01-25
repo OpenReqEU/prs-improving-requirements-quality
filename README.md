@@ -32,7 +32,7 @@ This microservice is Dockerized. With Docker installed on your machine, run the 
 
 This microservice takes a number of textual requirements as input, and returns a number of noted issues with the
 requirements quality. For detailed information on the endpoint(s), data format, and examples, see the Swagger file 
-included in this repository, or the hosted version: <Include link to hosted Swagger once it is available>.
+included in this repository, or the hosted version: [api.openreq.eu](https://api.openreq.eu/#/services/prs-improving-requirements-quality).
 
 See "How to Install" above to run the service, followed by using a REST client to send requests.
 
