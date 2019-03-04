@@ -55,7 +55,8 @@ To run the tests:
 
 #### Available Demos
 
-**iFrame Functionality**: It is possible to query the functioning API in your web browser, with URL parameters, and it 
+**iFrame Functionality**: NOT CURRENTLY FUNCTIONAL, ALTHOUGH FIXABLE
+It is possible to query the functioning API in your web browser, with URL parameters, and it 
 will act as a stand-alone page.
 Instructions on Use:
 1. Start the application locally using Docker and the above commands
