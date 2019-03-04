@@ -12,19 +12,6 @@ wn.ensure_loaded()
 class RequirementChecker:
 
     LITERATURE_DICT={
-
-        "M":        {
-                    "Title": "Technical communication: Complex Nominals Used to Express New Concepts and Ambiguity in Meaning",
-                    "Authors": "B. Montero",
-                    "Order": 0
-                    },
-
-        "LKTKK":    {
-                    "Title": "DENOM: A tool to find problematic nominalizations using NLP",
-                    "Authors": "Mathias Landhaußer, Sven J. Korner, Walter F. Tichy, Jan Keim, Jennifer Krisch",
-                    "Order": 1
-                    },
-
         "YWRN":     {
                     "Title": "Automatic detection of nocuous coordination ambiguities in natural language requirements",
                     "Authors": "Hui Yang, Alistair Willis, Anne N. De Roeck, B. Nuseibeh",
