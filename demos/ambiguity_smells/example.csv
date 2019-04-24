@@ -1,0 +1,4 @@
+﻿Once the audit trail functionality has been activated, the System must track events without manual intervention, and store in the audit trail information about them.
+The System must maintain the audit trail for as long as required, which will be at least for the life of the case to which it refers.
+The System must ensure that audit trail data is available for inspection on request, so that a specific event can be identified and all related data made accessible, and that this can be achieved by authorised external personnel who have little or no familiarity with the system.
+The System must be able to export audit trails for specified cases (without affecting the audit trail stored by the System). This functionality can be used by external auditors who wish to examine or analyse system activity.

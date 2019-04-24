@@ -1,3 +1,4 @@
+import inspect
 import os
 import sys
 import unittest
@@ -6,7 +7,11 @@ import json
 import random
 # Add the path of the parent directory to sys.path so amb_api can be accessed
 # This is only necessary if you are testing code above the test hierachy
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir)
+
 from starter import amb_api
 import lib
 from pprint import pprint

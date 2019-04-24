@@ -106,6 +106,11 @@ function getDataFromAPI(reqs) {
 
 function processResponse(reqs, response) {
 
+    let wordCount = 0;
+    for (var i = 0; i < reqs.length; i++) {
+        wordCount += reqs[i].length;
+    }
+
     function addHeader(number) {
         $("#annotatedRequirements").append(`
             <br>
@@ -114,22 +119,53 @@ function processResponse(reqs, response) {
         `);
     }
 
-    let ambStats = [];
-    let reqIndex = 0;
-    let useCaseNumber = 0;
+    var amb_counts = {
+        'Ambiguous Adverb or Adjective': 0,
+        'Comparatives and Superlatives': 0,
+        'Compound Noun': 0,
+        'Coordination': 0,
+        'Negative Statement': 0,
+        'Nominalization': 0,
+        'Subjective Language': 0,
+        'Vague Pronoun': 0,
+        'Other / Misc': 0,
+    };
+    const amb_key = 'language_construct';
+    $.each(response, function (req_index, ambiguities) {
 
-    addHeader(useCaseNumber++);
-    $.each(response, function (lineIndex, ambiguities) {
-
-        if (indexCharacters(reqIndex, lineIndex, reqs[lineIndex]))
-            reqIndex++;
-        else
-            addHeader(useCaseNumber++);
-        ambStats.push(highlightCharacters(lineIndex, ambiguities));
+        $.each(ambiguities, function (amb_index, amb) {
+            if (amb[amb_key] in amb_counts) {
+                amb_counts[amb[amb_key]] += 1;
+            } else {
+                amb_counts[amb[amb_key]] = 1;
+                console.log('Missing Language Construct: '+amb[amb_key])
+            }
+        });
     });
 
-    showLegend(ambStats);
-    showAmbiguityCounts(ambStats);
+    let tableText = '';
+    console.log("Number of Requirements: " + Object.keys(response).length);
+    for (var key in amb_counts) {
+        console.log(key.padEnd(30, ' ') + " : " + amb_counts[key]);
+        tableText += `<tr><td>${key}</td><td>&nbsp&nbsp&nbsp:&nbsp&nbsp&nbsp${amb_counts[key]}</td></tr>`
+    }
+
+    // Create display string
+    htmlElements = `
+        <br/>
+        <h4># Requirements: ${Object.keys(response).length}</h4>
+        <h4># of Words: ${wordCount}</h4>
+        <table style="padding: 5px;">
+            <tr>
+                <th>Ambiguity Indicator</th>
+                <th>Count</th>
+              </tr>
+            ${tableText}
+        </table>
+        </div>`;
+
+    // Add HTML to page
+    $('#ambiguity-counts').html(htmlElements);
 }
 
 function indexCharacters(reqIndex, lineIndex, text) {
@@ -275,7 +311,7 @@ function showLegend(ambStats) {
 
 function showAmbiguityCounts(ambStats) {
 
-    // Computer totals from individual ambiguity stats
+    // Compute totals from individual ambiguity stats
     let totalAmbCount = 0;
     let visibleAmbCount = 0;
     for (i=0;i<ambStats.length;i++) {

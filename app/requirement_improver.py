@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # Functionality imports
+import datetime
 from collections import defaultdict
 import spacy
 import json
@@ -11,36 +12,42 @@ wn.ensure_loaded()
 
 class RequirementChecker:
 
-    LITERATURE_DICT={
-        "YWRN":     {
+    LITERATURE_DICT = {
+        "NOVEL1" : {
+            "Title": "",
+            "Authors": "",
+            "Order": 0
+        },
+        "NOVEL2" : {
+            "Title": "",
+            "Authors": "",
+            "Order": 1
+        },
+        "YWRN10" : {
                     "Title": "Automatic detection of nocuous coordination ambiguities in natural language requirements",
                     "Authors": "Hui Yang, Alistair Willis, Anne N. De Roeck, B. Nuseibeh",
                     "Order": 2
-                    },
-
-        "FFJKZZ":   {
+        },
+        "FFJK14" : {
                     "Title": "Rapid Requirements Checks with Requirements Smells: Two Case Studies",
                     "Authors": "Henning Femmer, Daniel Méndez Fernándeza, Elmar Juergens, Michael Klose, Ilona Zimmer, Jörg Zimmer",
                     "Order": 3
-                    },
-
-        "XLLS":     {
+        },
+        "XLLS11" : {
                     "Title": "Mining comparative opinions from customer reviews for Competitive Intelligence",
                     "Authors": "Kaiquan Xu, Stephen Shaoyi Liao, Jiexun Li, Yuxia Song",
                     "Order": 4
-                    },
-
-        "GCK":      {
+        },
+        "GCK10" : {
                     "Title": "Ambiguity Detection: Towards a Tool Explaining Ambiguity Sources",
                     "Authors": "Benedikt Gleich, Oliver Creighton, Leonid Kof",
                     "Order": 5
-                    },
-
-        "TD":       {
+        },
+        "TB13" : {
                     "Title": "The Design of SREE — A Prototype Potential Ambiguity Finder for Requirements Specifications and Lessons Learned",
                     "Authors": "Sri Fatimah Tjong, Daniel M. Berry",
                     "Order": 6
-                    }
+        }
     }
 
     LEXICON_LOCATION = './app/lexicons'
@@ -51,6 +58,9 @@ class RequirementChecker:
 
     def check_lexical(self):
         def whole_word_regexp(w):
+            # Handle spaces in strings
+            w = w.replace(' ', '\s')
+
             try:
                 return re.compile(r'\b{0}\b'.format(w), flags=re.I|re.X)
             except re.error:
@@ -62,7 +72,9 @@ class RequirementChecker:
         # Find and save ambiguities
         ambs_found = {}
         # For each requirement sent
-        for req in self.reqs:
+        for req_i, req in enumerate(self.reqs):
+            # if req_i % 500 == 0:
+            #     print(f'check_lexical: {req_i} of {len(self.reqs)} at {str(datetime.datetime.now()).split(".")[0]}')
             ambs_found[req.id] = []
             # Go over all phrases in lexicon
             for _, amb_obj in amb_lex.items():
@@ -81,7 +93,9 @@ class RequirementChecker:
         # Find and save ambiguities
         ambs_found = {}
         # For each requirement sent
-        for req in self.reqs:
+        for req_i, req in enumerate(self.reqs):
+            # if req_i % 500 == 0:
+            #     print(f'check_regexs: {req_i} of {len(self.reqs)} at {str(datetime.datetime.now()).split(".")[0]}')
             ambs_found[req.id] = []
             # Go over all regular expressions in lexicon
             for _, amb_obj in amb_regexes.items():
@@ -109,7 +123,8 @@ class RequirementChecker:
                         split = req_truple.split('°')
                         return len(split[1]) + len(split[2]) + 2
                     except:
-                        exit()
+                        # TODO Needs investigation on the visualization of this change. If the above fails, something still needs to be fixed
+                        return 0
 
                 # Calculate space added by tokenization process
                 def count_tokenize_space(req_original_string, req_tokenized_string):
@@ -143,7 +158,8 @@ class RequirementChecker:
         # Find and save ambiguities
         ambs_found = {}
         # For each requirement sent
-        for req in self.reqs:
+        for req_i, req in enumerate(self.reqs):
+            # print(f'check_pos_regexs: {req_i} of {len(self.reqs)} at {str(datetime.datetime.now()).split(".")[0]}')
             ambs_found[req.id] = []
             # Convert requirement into nlp doc
             doc = self.nlp(req.text)
@@ -166,6 +182,7 @@ class RequirementChecker:
                     # Get the original indexes, since the truple string design messes with them
                     orig_indexes = get_original_indexes(
                         req_original_string, req_tokenized_string, req_truple_string, match)
+
                     orig_text = ' '.join([req_truple.split('°')[0] for req_truple in match[0].split()])
                     # Save this found ambiguity
                     ambs_found[req.id].append(self._get_ambiguity_object(
@@ -182,7 +199,9 @@ class RequirementChecker:
         # Find and save ambiguities
         ambs_found = {}
         # For each requirement sent
-        for req in self.reqs:
+        for req_i, req in enumerate(self.reqs):
+            # if req_i % 500 == 0:
+            #     print(f'check_compound: {req_i} of {len(self.reqs)} at {str(datetime.datetime.now()).split(".")[0]}')
             ambs_found[req.id] = []
             # Convert requirement into nlp doc
             doc = self.nlp(req.text)
@@ -207,7 +226,9 @@ class RequirementChecker:
         # Find and save ambiguities
         ambs_found = {}
         # For each requirement sent
-        for req in self.reqs:
+        for req_i, req in enumerate(self.reqs):
+            # if req_i % 500 == 0:
+            #     print(f'check_nominalization: {req_i} of {len(self.reqs)} at {str(datetime.datetime.now()).split(".")[0]}')
             ambs_found[req.id] = []
             # Go over all phrases in lexicon
             for _, amb_obj in amb_nom.items():
@@ -222,7 +243,7 @@ class RequirementChecker:
                                      and doc[token.i - 1].dep_ != 'aux'
                                      and token.text.lower() not in amb_obj['rule_exceptions']]
 
-                # Generate a list of nouminalizations with pos NN based on suffixes
+                # Generate a list of nominalizations with pos NN based on suffixes
                 nouns = [token for token in doc if (token.lemma_[-4:] in amb_obj['suffixes_len4']
                                                     or token.lemma_[-3:] in amb_obj['suffixes_len3']
                                                     or token.lemma_[-2:] in amb_obj['suffixes_len2'])
@@ -271,10 +292,11 @@ class RequirementChecker:
 
     def _get_ambiguity_object(self, amb_obj, regex_match=None, *, new_text=None, new_indexes=None):
         return {
-            "title"         : amb_obj['title'],
-            "description"   : amb_obj['description'],
-            "text"          : new_text if new_text else regex_match[0],
-            "index_start"   : new_indexes[0] if new_indexes else regex_match.start(),
-            "index_end"     : new_indexes[1] if new_indexes else regex_match.end()
+            "title"             : amb_obj['title'],
+            "description"       : amb_obj['description'],
+            "language_construct": amb_obj['language_construct'],
+            "text"              : new_text if new_text else regex_match[0],
+            "index_start"       : new_indexes[0] if new_indexes else regex_match.start(),
+            "index_end"         : new_indexes[1] if new_indexes else regex_match.end()
         }
 

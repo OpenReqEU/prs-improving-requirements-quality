@@ -3,102 +3,119 @@
         "title"         : "Actually",
         "description"   : "Requirements shall avoid possibilities.",
         "lexicon"       : ["actually"],
-        "lit_reference"  : "TD"
+        "lit_reference"  : "TB13",
+        "language_construct": "Ambiguous Adverb or Adjective"
     },
     "ambiguous_positioning" : {
         "title"         : "Ambiguous Positioning",
         "description"   : "The meaning depends highly on the position.",
         "lexicon"       : ["only", "also", "even"],
-        "lit_reference"  : "TD"
+        "lit_reference"  : "TB13",
+        "language_construct": "Other / Misc"
     },
     "ambiguous_words"  : {
         "title"         : "Ambiguous Words",
         "description"   : "List of ambiguous words from the Ambiguity Handbook.",
         "lexicon"       : ["include", "after", "before", "next", "previous", "minimum", "maximum"],
-        "lit_reference"  : "TD"
+        "lit_reference"  : "TB13",
+        "language_construct": "Ambiguous Adverb or Adjective"
     },
     "continuance" : {
         "title"         : "Continuance",
         "description"   : "These words offer continuance, which may introduce ambiguity by referencing information elsewhere.",
         "lexicon"       : ["as follows", "below", "following", "in addition", "in particular", "listed", "meantime", "meanwhile", "on one hand", "on the other hand", "whereas"],
-        "lit_reference"  : "TD"
+        "lit_reference"  : "TB13",
+        "language_construct": "Other / Misc"
     },
     "dangerous_plural" : {
         "title"         : "Dangerous Plural",
         "description"   : "Potentially dangerous plural.",
         "lexicon"       : ["all", "each", "every", "any", "few", "little", "many", "much", "several", "some", "a lot"],
-        "lit_reference"  : "TD"
+        "lit_reference"  : "TB13",
+        "language_construct": "Subjective Language"
     },
     "imprecise" : {
         "title"         : "Imprecise",
         "description"   : "These expressions are not concise.",
         "lexicon"       : ["could", "should", "might"],
-        "lit_reference"  : "TD"
+        "lit_reference"  : "TB13",
+        "language_construct": "Subjective Language"
     },
     "inside_behaviour" : {
         "title"         : "Inside Behaviour",
         "description"   : "These expressions do not specify the “outside boundaries” behaviour.",
         "lexicon"       : ["until", "during", "through", "after", "at"],
-        "lit_reference"  : "TD"
+        "lit_reference"  : "TB13",
+        "language_construct": "Subjective Language"
     },
     "missing_content" : {
         "title"         : "Missing Content",
         "description"   : "These expressions denote that something is missing.",
         "lexicon"       : ["tbd", "etc", "tba", "tba", "tbe", "tbs", "tbr", "as a minimum", "as deﬁned", "as speciﬁed", "in addition", "is deﬁned", "no practical limit", "not deﬁned", "not determined", "but not limited to", "to be advised", "to be deﬁned", "to be completed", "to be determined", "to be resolved", "to be speciﬁed"],
-        "lit_reference"  : "TD"
+        "lit_reference"  : "TB13",
+        "language_construct": "Subjective Language"
     },
     "negative" : {
         "title"         : "Negative",
         "description"   : "Speciﬁcations should be positive.",
         "lexicon"       : ["not"],
-        "lit_reference"  : "TD"
+        "lit_reference"  : "GCK10",
+        "language_construct": "Negative Statement"
     },
     "negative_reason" : {
         "title"         : "Negative Reason",
         "description"   : "The negative reasons are hardly relevant.",
         "lexicon"       : ["not because"],
-        "lit_reference"  : "TD"
+        "lit_reference"  : "GCK10",
+        "language_construct": "Negative Statement"
     },
     "optional" : {
         "title"         : "Optional",
         "description"   : "These optional words are likely not necessary and may add ambiguity.",
         "lexicon"       : ["as desired", "at last", "either", "eventually", "if appropriate", "if desired", "in case of", "if necessary", "if needed", "neither", "nor", "optionally", "otherwise", "possibly", "probably", "whether"],
-        "lit_reference"  : "TD"
+        "lit_reference"  : "TB13",
+        "language_construct": "Ambiguous Adverb or Adjective"
     },
     "pronoun" : {
         "title"         : "Pronoun",
         "description"   : "Potentially unclear reference.",
         "lexicon"       : ["he", "she", "it", "anyone", "anybody", "anything", "everyone", "everybody", "everything", "her", "hers", "herself", "him", "himself", "his", "i", "its", "itself", "me", "mine", "most", "my", "myself", "nobody", "none", "no one", "nothing", "our", "ours", "ourselves", "someone", "somebody", "something", "that", "their", "theirs", "them", "themselves", "these", "they", "this", "those", "us", "we", "what", "whatever", "which", "whichever", "who", "whoever", "whom", "whomever", "whose", "whosever", "you", "your", "yours", "yourself", "yourselves"],
-        "lit_reference"  : "TD"
+        "lit_reference"  : "TB13",
+        "language_construct": "Vague Pronoun"
     },
     "speculation" : {
         "title"         : "Speculation",
         "description"   : "Unnecessary speculation.",
         "lexicon"       : ["usually", "normally"],
-        "lit_reference"  : "TD"
+        "lit_reference"  : "TB13",
+        "language_construct": "Ambiguous Adverb or Adjective"
     },
     "too_broad" : {
         "title"         : "Too Broad",
         "description"   : "These expressions can refer to too many cases.",
         "lexicon"       : ["otherwise", "else", "if not"],
-        "lit_reference"  : "TD"
+        "lit_reference"  : "TB13",
+        "language_construct": "Subjective Language"
     },
     "weak" : {
         "title"         : "Weak",
         "description"   : "These weak words are likely to introduce ambiguity.",
         "lexicon"       : ["can", "could", "may", "might", "ought to", "preferred", "should", "will", "would"],
-        "lit_reference"  : "TD"
+        "lit_reference"  : "TB13",
+        "language_construct": "Subjective Language"
     },
     "wishful_thinking" : {
         "title"         : "Wishful Thinking",
         "description"   : "It is not likely that all errors will be caught, this is wishful thinking and unreasonable.",
         "lexicon"       : ["100 percent", "all errors"],
-        "lit_reference"  : "TD"
+        "lit_reference"  : "TB13",
+        "language_construct": "Other / Misc"
     },
     "vague" : {
         "title"         : "Vague",
         "description"   : "These vague words and symbols are likely to introduce ambiguity.",
-        "lexicon"       : ["/", "< >", "(", ")", "[", "]", ";", "?", "!", "adaptability", "additionally", "adequate", "aggregate", "ancillary", "arbitrary", "appropriate", "as appropriate", "available", "as far as", "at last", "as few as possible", "as little as possible", "as many as possible", "as much as possible", "as required", "as well as", "bad", "both", "but", "but also", "but not limited to", "capable of", "capable to", "capability of", "capability", "common", "correctly", "consistent", "contemporary", "convenient", "credible", "custom", "customary", "default", "deﬁnable", "easily", "easy", "effective", "efﬁcient", "episodic", "equitable", "equitably", "eventually", "exist", "exists", "expeditiously", "fast", "fair", "fairly", "ﬁnally", "frequently", "full", "general", "generic", "good", "high-level", "impartially", "infrequently", "insigniﬁcant", "intermediate", "interactive", "in terms of", "less", "lightweight", "logical", "low-level", "maximum", "minimum", "more", "mutually-agreed", "mutually-exclusive", "mutuallyinclusive", "near", "necessary", "neutral", "not only", "only", "on the ﬂy", "particular", "physical", "powerful", "practical", "prompt", "provided", "quickly", "random", "recent", "regardless of", "relevant", "respective", "robust", "routine", "sufﬁciently", "sequential", "signiﬁcant", "simple", "speciﬁc", "strong", "there", "there is", "transient", "transparent", "timely", "undeﬁnable", "understandable", "unless", "unnecessary", "useful", "various", "varying"],
-        "lit_reference"  : "TD"
+        "lexicon"       : ["/", "< >", "(", ")", "[", "]", ";", "?", "!", "adaptability", "additionally", "adequate", "aggregate", "ancillary", "arbitrary", "appropriate", "available", "as far as", "at last", "as few as possible", "as little as possible", "as many as possible", "as much as possible", "as required", "as well as", "bad", "both", "but", "but also", "but not limited to", "capable of", "capable to", "capability of", "capability", "common", "correctly", "consistent", "contemporary", "convenient", "credible", "custom", "customary", "default", "deﬁnable", "easily", "easy", "effective", "efﬁcient", "episodic", "equitable", "equitably", "eventually", "exist", "exists", "expeditiously", "fast", "fair", "fairly", "ﬁnally", "frequently", "full", "general", "generic", "good", "high-level", "impartially", "infrequently", "insigniﬁcant", "intermediate", "interactive", "in terms of", "less", "lightweight", "logical", "low-level", "maximum", "minimum", "more", "mutually-agreed", "mutually-exclusive", "mutuallyinclusive", "near", "necessary", "neutral", "not only", "only", "on the ﬂy", "particular", "physical", "powerful", "practical", "prompt", "provided", "quickly", "random", "recent", "regardless of", "relevant", "respective", "robust", "routine", "sufﬁciently", "sequential", "signiﬁcant", "simple", "speciﬁc", "strong", "there", "there is", "transient", "transparent", "timely", "undeﬁnable", "understandable", "unless", "unnecessary", "useful", "various", "varying"],
+        "lit_reference"  : "TB13",
+        "language_construct": "Subjective Language"
     }
 }

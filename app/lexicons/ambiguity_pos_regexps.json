@@ -3,96 +3,98 @@
         "title"         : "Passive Ambiguity",
         "description"   : "Authors should state requirements in active form, as passive conceals who is responsible for the action.",
         "regexp"        : "\\b\\w+?°V[^°]*°be (\\W[^°]+?°(?!VB.)[^°]*°[^ ]+?)* \\W\\w+?°VBN°\\w+",
-        "lit_reference"  : "GCK"
-    },
-    "adjective" : {
-        "title"         : "Adjective",
-        "description"   : "Adjectives are likely to be ambiguous.",
-        "regexp"        : "(?<=\\s)\\S*°JJ.?°[^ ]+",
-        "lit_reference"  : "GCK"
-    },
-    "adverb" : {
-        "title"         : "Adverb",
-        "description"   : "Adverbs are likely to be ambiguous.",
-        "regexp"        : "(?<=\\s)\\S*°RB.?°[^ ]+",
-        "lit_reference"  : "GCK"
+        "lit_reference"  : "GCK10",
+        "language_construct": "Subjective Language"
     },
     "comparative_verbs" : {
         "title"         : "Comparative Verbs",
         "description"   : "Property definitions should be explicit. Thus it is bad practice to define a system's property by comparing it to another system.",
         "regexp"        : "(?<=\\s)\\S*°VB[^°]*°(compare|differ|contrast|outperform|exceed|outrun|surpass|defeat|top|outplay|lead|outdo|excel|transcend|overshadow|outbalance|outperform|outdo|outgo|outstrip|surmount|surpass|best|trump|stand out|outmatch|past|overstep|overtake|overhaul|compare|equate|extent|oppose|match|rival|compete|equate|resemble)[^ ]*",
-        "lit_reference"  : "XLLS"
+        "lit_reference"  : "XLLS11",
+        "language_construct": "Comparatives and Superlatives"
     },
     "comparative_adjective" : {
         "title"         : "Comparative Adjective",
         "description"   : "Property definitions should be explicit. Thus it is bad practice to define a system's property by comparing it to another system.",
         "regexp"        : "(?<=\\s)\\S*°JJR.?°[^ ]+",
-        "lit_reference"  : "FFJKZZ"
+        "lit_reference"  : "FFJK14",
+        "language_construct": "Comparatives and Superlatives"
     },
     "comparative_adverb" : {
         "title"         : "Comparative Adverb",
         "description"   : "Property definitions should be explicit. Thus it is bad practice to define a system's property by comparing it to another system.",
         "regexp"        : "(?<=\\s)\\S*°RBR.?°[^ ]+",
-        "lit_reference"  : "FFJKZZ"
+        "lit_reference"  : "FFJK14",
+        "language_construct": "Comparatives and Superlatives"
     },
     "superlative_adjective" : {
         "title"         : "Superlative Adjective",
         "description"   : "The use of superlatives makes the described property unverifiable.",
         "regexp"        : "(?<=\\s)\\S*°JJS.?°[^ ]+",
-        "lit_reference"  : "FFJKZZ"
+        "lit_reference"  : "FFJK14",
+        "language_construct": "Comparatives and Superlatives"
     },
     "superlative_adverb" : {
         "title"         : "Superlative Adverb",
         "description"   : "The use of superlatives makes the described property unverifiable.",
         "regexp"        : "(?<=\\s)\\S*°RBS.?°[^ ]+",
-        "lit_reference"  : "FFJKZZ"
+        "lit_reference"  : "FFJK14",
+        "language_construct": "Comparatives and Superlatives"
     },
     "coordination_adj" : {
         "title"         : "Coordination of two nouns modified by an adjective",
         "description"   : "Following an adjective by two nouns joint by 'and' or 'or' makes it unclear if the adjective describes the first noun only or both nouns.",
         "regexp"        : "(?<=\\s)\\S*°JJ[^°]*°[\\S]+\\s[\\S]+°NN[^°]*°[\\S]+\\s(and|or)°CC°(and|or)\\s[\\S]+°NN[^°]*°[\\S]+",
-        "lit_reference"  : "YWRN"
+        "lit_reference"  : "YWRN10",
+        "language_construct": "Coordination"
     },
     "coordination_vb" : {
         "title"         : "Coordination of two nouns preceded by a verb",
         "description"   : "Following a verb by two nouns joint by 'and' or 'or' makes it unclear if the verb describes the first noun only or both nouns.",
         "regexp"        : "(?<=\\s)\\S*°VBN*°[\\S]+\\s[\\S]+°NN[^°]*°[\\S]+\\s(and|or)°CC°(and|or)\\s[\\S]+°NN[^°]*°[\\S]+",
-        "lit_reference"  : "YWRN"
+        "lit_reference"  : "YWRN10",
+        "language_construct": "Coordination"
     },
     "coordination_nn" : {
         "title"         : "Coordination of two nouns preceded by another noun",
         "description"   : "Following a noun by two nouns joint by 'and' or 'or' makes it unclear if the noun describes the first noun only or both nouns.",
         "regexp"        : "w+?°NN[^°]*°[\\S]+\\s([\\S]+°IN°[\\S]+\\s)*[\\S]+°NN[^°]*°[\\S]+\\s(and|or)°CC°(and|or)\\s[\\S]+°NN[^°]*°[\\S]+",
-        "lit_reference"  : "YWRN"
+        "lit_reference"  : "YWRN10",
+        "language_construct": "Coordination"
     },
     "coordination_post_nn" : {
         "title"         : "Coordination of two nouns followed by another noun",
         "description"   : "Following two nouns joint by 'and' or 'or' by a third noun makes the word association unclear.",
         "regexp"        : "([\\S]+°DT°[\\S]+\\s)*([\\S]+°JJ[^°]*°[\\S]+\\s)*[\\S]+°NN[^°]*°[\\S]+\\s(and|or)°CC°(and|or)\\s([\\S]+°DT°[\\S]+\\s)*([\\S]+°JJ[^°]*°[\\S]+\\s)*[\\S]+°NN[^°]*°[\\S]+\\s([\\S]+°IN°[\\S]+\\s)*([\\S]+°DT°[\\S]+\\s)*([\\S]+°JJ[^°]*°[\\S]+\\s)*[\\S]+°NN[^°]*°[\\S]+",
-        "lit_reference"  : "YWRN"
+        "lit_reference"  : "YWRN10",
+        "language_construct": "Coordination"
     },
     "coordination_adv" : {
         "title"         : "Coordination of two verbs modified by an adverb",
         "description"   : "Following an adverb by two verbs joint by 'and' or 'or' makes it unclear if the adverb describes the first verb only or both verbs.",
         "regexp"        : "(?<=\\s)\\S*°RB[^°]*°[\\S]+\\s[\\S]+°VB[^°]*°[\\S]+\\s(and|or)°CC°(and|or)\\s[\\S]+°VB[^°]*°[\\S]+",
-        "lit_reference"  : "YWRN"
+        "lit_reference"  : "YWRN10",
+        "language_construct": "Coordination"
     },
     "coordination_nn_vb" : {
         "title"         : "Coordination of two verbs preceded by a noun",
         "description"   : "Following a noun with two verbs joint by 'and' or 'or' makes it unclear if the noun describes the first verb only or both verbs.",
         "regexp"        : "[\\S]+°NN[^°]*°[\\S]+\\s([\\S]+°IN°[\\S]+\\s)*([\\S]+°JJ[^°]*°[\\S]+\\s)*[\\S]+°VB[^°]*°[\\S]+\\s(and|or)°CC°(and|or)\\s([\\S]+°JJ[^°]*°[\\S]+\\s)*[\\S]+°VB[^°]*°[\\S]+",
-        "lit_reference"  : "YWRN"
+        "lit_reference"  : "YWRN10",
+        "language_construct": "Coordination"
     },
     "coordination_vb_nn" : {
         "title"         : "Coordination of two verbs followed by a noun",
         "description"   : "Following two verbs joint by 'and' or 'or' by a noun makes it unclear if the noun describes the second verb only or both verbs.",
         "regexp"        : "(?<=\\s)\\S*°VB[^°]*°[\\S]+\\s(and|or)°CC°(and|or)\\s[\\S]+°VB[^°]*°[\\S]+\\s(\\S]+°IN°[\\S]+\\s)*([\\S]+°DT°[\\S]+\\s)*([\\S]+°(JJ[^°]*|VBN)°[\\S]+\\s)*[\\S]+°NN[^°]*°[\\S]+",
-        "lit_reference"  : "YWRN"
+        "lit_reference"  : "YWRN10",
+        "language_construct": "Coordination"
     },
     "coordination_vb_adv" : {
         "title"         : "Coordination of two verbs followed by an adverb",
         "description"   : "Following two verbs joint by 'and' or 'or' by an adverb makes it unclear if the adverb describes the second verb only or both verbs.",
         "regexp"        : "(?<=\\s)\\S*°VB[^°]*°[\\S]+\\s(and|or)°CC°(and|or)\\s[\\S]+°VB[^°]*°[\\S]+\\s[\\S]+°RB[^°]*°[\\S]+",
-        "lit_reference"  : "YWRN"
+        "lit_reference"  : "YWRN10",
+        "language_construct": "Coordination"
     }
 }

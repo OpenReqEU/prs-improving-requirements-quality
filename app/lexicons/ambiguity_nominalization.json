@@ -26,6 +26,7 @@
                           "transaction",
                           "transmission"
                           ],
-    "lit_reference"  : "NOVEL"
+    "lit_reference"  : "NOVEL2",
+    "language_construct": "Nominalization"
   }
 }

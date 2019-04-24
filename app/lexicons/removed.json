@@ -1,0 +1,16 @@
+{
+  "adjective" : {
+        "title"         : "Adjective",
+        "description"   : "Adjectives are likely to be ambiguous.",
+        "regexp"        : "(?<=\\s)\\S*°JJ.?°[^ ]+",
+        "lit_reference"  : "GCK10",
+        "language_construct": "Ambiguous Adverb or Adjective"
+    },
+    "adverb" : {
+        "title"         : "Adverb",
+        "description"   : "Adverbs are likely to be ambiguous.",
+        "regexp"        : "(?<=\\s)\\S*°RB.?°[^ ]+",
+        "lit_reference"  : "GCK10",
+        "language_construct": "Ambiguous Adverb or Adjective"
+    }
+}
