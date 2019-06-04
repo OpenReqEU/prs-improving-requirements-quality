@@ -1,0 +1,8 @@
+[run]
+omit = coverage-reports/*, demos/*, tests/*, venv/*
+
+[html]
+directory = coverage-reports
+
+[xml]
+output = coverage-reports/coverage.xml
