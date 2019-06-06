@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import json
 from flask import (
     Flask, request, abort, jsonify, render_template
 )
@@ -11,6 +11,10 @@ from app.requirement import Requirement
 amb_api = Flask(__name__, template_folder='./demos/iframe/templates', static_folder='./demos/iframe/static')
 
 CORS(amb_api)  # So we can run and test locally. May be production necessary as well.
+
+with open('./config.json') as config_file:
+    CONFIG = json.load(config_file)
+
 
 def check_json_conformance_and_create_objects():
     json_data = {}
@@ -59,5 +63,4 @@ def check_quality():
 
 
 if __name__ == "__main__":
-    # amb_api.run(debug=True, host='127.0.0.1', port=9799)
-    amb_api.run(debug=True, host='0.0.0.0', port=9799)
+    amb_api.run(debug=True, host=CONFIG['HOST'], port=CONFIG['PORT'])
