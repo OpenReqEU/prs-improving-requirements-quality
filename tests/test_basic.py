@@ -51,18 +51,37 @@ class TestBasic(unittest.TestCase):
 
     # Unit tests
 
+    def test_run_exists(self):
+        print(exec(open("./starter.py").read()))
+
+
     def test_responsive(self):
         # Test if APIs are responding to a proper request
         response = self._call_check_quality('This is actually a good requirement.')
         self.assertEqual(response._status_code, 200, msg='API should be responsive with 200 status code')
 
-    def test_api_error_handling(self):
+    def test_responsive_html_ui(self):
+        # Test if html ui is responding to a proper request
+        response = self.amb_api.get(
+            '/',
+            follow_redirects=True)
+        self.assertEqual(response._status_code, 200, msg='API should be responsive with 200 status code')
+
+    def test_api_error_handling_empty_body(self):
         # Check if requests reject when "doc" is not in body
         response = self.amb_api.post(
             '/check-quality',
             data='{{}}',
             follow_redirects=True)
-        self.assertEqual(response._status_code, 400, msg='API should handle errors')
+        self.assertEqual(response._status_code, 400, msg='API should handle an empty body')
+
+    def test_api_error_handling_missing_key(self):
+        # Check if requests reject when "doc" is not in body
+        response = self.amb_api.post(
+            '/check-quality',
+            data='{"wrong_key": true}',
+            follow_redirects=True)
+        self.assertEqual(response._status_code, 400, msg='API should handle a body with missing keys')
 
     def test_return_proper_json(self):
         # Check if APIs return the proper JSON

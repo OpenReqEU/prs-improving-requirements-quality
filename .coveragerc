@@ -6,3 +6,7 @@ directory = coverage-reports
 
 [xml]
 output = coverage-reports/coverage.xml
+
+[report]
+exclude_lines =
+    if __name__ == .__main__.:
