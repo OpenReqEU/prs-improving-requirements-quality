@@ -62,7 +62,6 @@ def get_reqs(json_data):
 
 
 def get_config(json_data):
-    config = None
     # Check if the user has passed a config
     try:
         return json_data['config']
