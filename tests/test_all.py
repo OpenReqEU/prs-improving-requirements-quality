@@ -4,11 +4,21 @@
 import unittest
 # Import each set of unit tests
 from test_basic import TestBasic
+from test_check_lexical import TestCheckLexical
+from test_check_regexs import TestCheckRegexs
+from test_check_pos_regexs import TestCheckPOSRegexs
+from test_check_compound_nouns import TestCheckCompoundNouns
+from test_check_nominalizations import TestCheckNominalizations
 
 if __name__ == '__main__':
     # Load and run each test suite, in a specific order
     test_classes = [
-        TestBasic
+        TestBasic,
+        TestCheckLexical,
+        TestCheckRegexs,
+        TestCheckPOSRegexs,
+        TestCheckCompoundNouns,
+        TestCheckNominalizations
     ]
 
     # Necessary functions

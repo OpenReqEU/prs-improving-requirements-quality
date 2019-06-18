@@ -6,7 +6,6 @@ from flask import (
 from flask_cors import CORS
 
 from app.requirement_improver import RequirementChecker
-from app.requirement import Requirement
 
 amb_api = Flask(__name__, template_folder='./demos/iframe/templates', static_folder='./demos/iframe/static')
 
@@ -16,7 +15,19 @@ with open('./config.json') as config_file:
     CONFIG = json.load(config_file)
 
 
-def check_json_conformance_and_create_objects():
+class Requirement:
+
+    def __init__(self, *, id, text):
+        # These attributes are a part of the OpenReq JSON Standard: <Link to OpenReq JSON Standard>
+
+        ## Required by this API ##
+        # The unique identifier of a Requirement. Not a null value or an empty string.
+        self.id = id
+        # The textual description or content of a Requirement.
+        self.text = text
+
+
+def check_json_conformance():
     json_data = {}
     try:
         # Check that the request can be read
@@ -28,10 +39,8 @@ def check_json_conformance_and_create_objects():
     try:
         # Extract requirements from JSON
         reqs = json_data['requirements']
-        # Transform JSON
-        reqs = [Requirement(id=req['id'], text=req['text']) for req in reqs]
-        # Return the wrapped function, passing through reqs
-        return reqs
+        # Check each requirement for conformance
+        [Requirement(id=req['id'], text=req['text']) for req in reqs]
     except KeyError:
         abort(400, """Improper body sent. Body should resemble the following example input:
             {
@@ -43,6 +52,23 @@ def check_json_conformance_and_create_objects():
                     "text": "The system shall read HTML and PDF or DOC files."
                 }]
             }""")
+    return json_data
+
+
+def get_reqs(json_data):
+    reqs = json_data['requirements']
+    reqs = [Requirement(id=req['id'], text=req['text']) for req in reqs]
+    return reqs
+
+
+def get_config(json_data):
+    config = None
+    # Check if the user has passed a config
+    try:
+        return json_data['config']
+    except KeyError:
+        # The config is optional, so we simply return None if it is not found
+        return None
 
 
 # These initial routes are to enable the demo to function properly.
@@ -58,8 +84,10 @@ def index(requirement=None):
 # This is the main route for checking requirement(s) quality
 @amb_api.route("/check-quality", methods=['POST'])
 def check_quality():
-    reqs = check_json_conformance_and_create_objects()
-    return jsonify(RequirementChecker(reqs).check_quality())
+    json_data = check_json_conformance()
+    reqs = get_reqs(json_data)
+    config = get_config(json_data)
+    return jsonify(RequirementChecker(reqs, config).check_quality())
 
 
 if __name__ == "__main__":

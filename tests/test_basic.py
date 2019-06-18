@@ -1,30 +1,17 @@
-import inspect
 import os
 import sys
 import unittest
 import warnings
 import json
 import random
+
 # Add the path of the parent directory to sys.path so amb_api can be accessed
-# This is only necessary if you are testing code above the test hierachy
-
-current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parent_dir = os.path.dirname(current_dir)
-sys.path.insert(0, parent_dir)
-
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from starter import amb_api
-import lib
-from pprint import pprint
 
+import lib
 
 class TestBasic(unittest.TestCase):
-
-    API_INPUT_FORMAT = """{
-    "requirements": [{
-        "id": "1",
-        "text": "{{requirement}}"
-    }]
-}"""
 
     def setUp(self):
         # Ignore third-party warnings from setup phase..
@@ -50,10 +37,6 @@ class TestBasic(unittest.TestCase):
             return None
 
     # Unit tests
-
-    def test_run_exists(self):
-        print(exec(open("./starter.py").read()))
-
 
     def test_responsive(self):
         # Test if APIs are responding to a proper request

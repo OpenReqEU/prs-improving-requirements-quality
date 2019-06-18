@@ -41,8 +41,8 @@ See "How to Install" above to run the service, followed by using a REST client t
 
 #### Updating requirements.txt
 Run the following command to update the requirements.txt before pushing to GIT:
-1) `venv/bin/pip freeze > requirements.txt`
-2) Remove `en-core-web-sm==2.0.0` from requirements.txt
+1. `venv/bin/pip freeze > requirements.txt`
+2. Remove `en-core-web-sm==2.0.0` from requirements.txt
 
 NOTE: If you run `pip freeze > requirements.txt` from a normal terminal, you will include all global packages, 
 creating a bloated file. Please only use this command from a virtual environment where you are certain of the packages.
@@ -50,14 +50,22 @@ creating a bloated file. Please only use this command from a virtual environment
 #### Running Tests
 
 To run the tests:
-1) Navigate to the root folder
-2) Run `python tests/test_all.py`
+1. Navigate to the root folder
+2. Run `python tests/test_all.py`
+
+#### Generating and Viewing Test Coverage Reports
+
+Run the following commands to generate test-coverage files. The XML is necessary for certain quality tools, and the HTML files can be used to view the results in a human-readable format.
+1. `.coveragerc` file contains configurations for test coverage output. Edit as necessary.
+2. Ensure that `pip install -r requirements.txt` has already been run, as it contains the packages necessary for the code to run as well as the test coverage commands
+3. Run `pytest --cov=. --cov-report={xml,html} --cov-config=.coveragerc tests/test_basic.py` in the root folder to generate the test coverage files
+4. Open `coverage-reports/html/index.html` to view the results
 
 #### Available Demos
 
 **iFrame Functionality**: NOT CURRENTLY FUNCTIONAL, ALTHOUGH FIXABLE
 It is possible to query the functioning API in your web browser, with URL parameters, and it 
-will act as a stand-alone page.
+will act as a stand-alone page.∏
 Instructions on Use:
 1. Start the application locally using Docker and the above commands
 2. Open the following your browser: 

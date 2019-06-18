@@ -52,8 +52,9 @@ class RequirementChecker:
 
     LEXICON_LOCATION = './app/lexicons'
 
-    def __init__(self, reqs):
+    def __init__(self, reqs, config=None):
         self.reqs = reqs
+        self.config = config if config else {}
         self.nlp = spacy.load('en')
 
     def check_lexical(self):
@@ -88,7 +89,7 @@ class RequirementChecker:
     def check_regexs(self):
 
         # Load ambiguity regex JSON document
-        amb_regexes = json.load(open(f'{self.LEXICON_LOCATION}/ambiguity_regexps.json', encoding = 'utf-8'))
+        amb_regexes = json.load(open(f'{self.LEXICON_LOCATION}/ambiguity_regexs.json', encoding = 'utf-8'))
 
         # Find and save ambiguities
         ambs_found = {}
@@ -153,7 +154,7 @@ class RequirementChecker:
                 match.end() - count_extra_indexes(match.end()))
 
         # Load ambiguity pos regex JSON document
-        amb_pos_regexps = json.load(open(f'{self.LEXICON_LOCATION}/ambiguity_pos_regexps.json', encoding = 'utf-8'))
+        amb_pos_regexps = json.load(open(f'{self.LEXICON_LOCATION}/ambiguity_pos_regexs.json', encoding = 'utf-8'))
 
         # Find and save ambiguities
         ambs_found = {}
@@ -281,12 +282,31 @@ class RequirementChecker:
             # Sort the internal lists, and return the final list
             return {k:sorted(v, key=lambda key: key['index_start']) for k,v in combined_ambs_found.items()}
 
-        ambs_found = []
-        ambs_found.append(self.check_lexical())
-        ambs_found.append(self.check_regexs())
-        ambs_found.append(self.check_pos_regexs())
-        ambs_found.append(self.check_compound())
-        ambs_found.append(self.check_nominalization())
+        # Algorithms to run
+        algs_to_run = [
+            self.check_lexical,
+            self.check_regexs,
+            self.check_pos_regexs,
+            self.check_compound,
+            self.check_nominalization
+        ]
+
+        # Curate algorithms based on the config, if it has been set
+        if 'algorithms' in self.config:
+            algorithms = self.config['algorithms']
+            if 'Lexical' not in algorithms:
+                algs_to_run.remove(self.check_lexical)
+            if 'RegularExpressions' not in algorithms:
+                algs_to_run.remove(self.check_regexs)
+            if 'POSRegularExpressions' not in algorithms:
+                algs_to_run.remove(self.check_pos_regexs)
+            if 'CompoundNouns' not in algorithms:
+                algs_to_run.remove(self.check_compound)
+            if 'Nominalization' not in algorithms:
+                algs_to_run.remove(self.check_nominalization)
+
+        # Run all of the algorithms
+        ambs_found = [alg() for alg in algs_to_run]
 
         return combine_ambs_found(ambs_found)
 
