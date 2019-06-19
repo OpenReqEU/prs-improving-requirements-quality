@@ -36,6 +36,24 @@ included in this repository, or the hosted version: [api.openreq.eu](https://api
 
 See "How to Install" above to run the service, followed by using a REST client to send requests.
 
+For simplicity and due to limitations in Swagger representation, the optional JSON field "config" is not listed in the Swagger documentation. See below for an example JSON object passed to the API, with the optional config field being used. 
+
+```json
+{
+  "requirements": [
+    {
+      "id": "1",
+      "text": "The system may respond within 5 seconds."
+    }
+  ],
+  "config": {
+    "algorithms": ["Lexical", "RegularExpressions", "POSRegularExpressions", "CompoundNouns", "Nominalization"]
+  }
+}
+```
+
+Note: The above example uses the optional field "config" as well as the option sub-field "algorithms". When you pass these two optional fields, only the algorithms listed in the array "algorithms" will be run. In the example above, all possible algorithms have been listed, so this configuration is not restricting the API in any way. To reduce the number of algorithms run (and therefore the results returned), remove algorithms from the "algorithms" array above. If you want all algorithms to run, simply remove the "config" field altogether.
+
 
 ### Notes for Developers
 
