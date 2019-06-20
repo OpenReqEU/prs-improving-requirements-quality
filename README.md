@@ -69,14 +69,14 @@ creating a bloated file. Please only use this command from a virtual environment
 
 To run the tests:
 1. Navigate to the root folder
-2. Run `python tests/test_all.py`
+2. Run `python test_all.py`
 
 #### Generating and Viewing Test Coverage Reports
 
 Run the following commands to generate test-coverage files. The XML is necessary for certain quality tools, and the HTML files can be used to view the results in a human-readable format.
 1. `.coveragerc` file contains configurations for test coverage output. Edit as necessary.
 2. Ensure that `pip install -r requirements.txt` has already been run, as it contains the packages necessary for the code to run as well as the test coverage commands
-3. Run `pytest --cov=. --cov-report={xml,html} --cov-config=.coveragerc tests/test_basic.py` in the root folder to generate the test coverage files
+3. Run `pytest --cov=. --cov-report={xml,html} --cov-config=.coveragerc test_all.py` in the root folder to generate the test coverage files
 4. Open `coverage-reports/html/index.html` to view the results
 
 #### Available Demos

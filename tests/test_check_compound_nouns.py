@@ -5,11 +5,8 @@ import warnings
 import json
 import random
 
-# Add the path of the parent directory to sys.path so amb_api can be accessed
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from starter import amb_api
-
-import lib
+import tests.lib as lib
 
 class TestCheckCompoundNouns(unittest.TestCase):
 

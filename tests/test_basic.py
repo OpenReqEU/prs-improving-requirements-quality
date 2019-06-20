@@ -5,11 +5,10 @@ import warnings
 import json
 import random
 
-# Add the path of the parent directory to sys.path so amb_api can be accessed
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add the path of the parent directory to sys.path so amb_api can be accessed IF test_all.py is in the "tests" folder
+# sys.path.append(os.path.dirname(os.path.dirname(os.path.relpath(__file__))))
 from starter import amb_api
-
-import lib
+import tests.lib as lib
 
 class TestBasic(unittest.TestCase):
 
