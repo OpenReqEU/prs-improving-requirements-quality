@@ -32,21 +32,16 @@ class RequirementChecker:
                     "Title": "Rapid Requirements Checks with Requirements Smells: Two Case Studies",
                     "Authors": "Henning Femmer, Daniel Méndez Fernándeza, Elmar Juergens, Michael Klose, Ilona Zimmer, Jörg Zimmer",
                     "Order": 3
-        },
-        "XLLS11" : {
-                    "Title": "Mining comparative opinions from customer reviews for Competitive Intelligence",
-                    "Authors": "Kaiquan Xu, Stephen Shaoyi Liao, Jiexun Li, Yuxia Song",
-                    "Order": 4
-        },
+        }
         "GCK10" : {
                     "Title": "Ambiguity Detection: Towards a Tool Explaining Ambiguity Sources",
                     "Authors": "Benedikt Gleich, Oliver Creighton, Leonid Kof",
-                    "Order": 5
+                    "Order": 4
         },
         "TB13" : {
                     "Title": "The Design of SREE — A Prototype Potential Ambiguity Finder for Requirements Specifications and Lessons Learned",
                     "Authors": "Sri Fatimah Tjong, Daniel M. Berry",
-                    "Order": 6
+                    "Order": 5
         }
     }
 

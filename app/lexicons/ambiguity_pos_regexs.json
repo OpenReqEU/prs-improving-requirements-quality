@@ -10,7 +10,7 @@
         "title"         : "Comparative Verbs",
         "description"   : "Property definitions should be explicit. Thus it is bad practice to define a system's property by comparing it to another system.",
         "regexp"        : "(?<=\\s)\\S*°VB[^°]*°(compare|differ|contrast|outperform|exceed|outrun|surpass|defeat|top|outplay|lead|outdo|excel|transcend|overshadow|outbalance|outperform|outdo|outgo|outstrip|surmount|surpass|best|trump|stand out|outmatch|past|overstep|overtake|overhaul|compare|equate|extent|oppose|match|rival|compete|equate|resemble)[^ ]*",
-        "lit_reference"  : "XLLS11",
+        "lit_reference"  : "FFJK14",
         "language_construct": "Comparatives and Superlatives"
     },
     "comparative_adjective" : {
