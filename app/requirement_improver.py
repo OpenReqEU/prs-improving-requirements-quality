@@ -32,7 +32,7 @@ class RequirementChecker:
                     "Title": "Rapid Requirements Checks with Requirements Smells: Two Case Studies",
                     "Authors": "Henning Femmer, Daniel Méndez Fernándeza, Elmar Juergens, Michael Klose, Ilona Zimmer, Jörg Zimmer",
                     "Order": 3
-        }
+        },
         "GCK10" : {
                     "Title": "Ambiguity Detection: Towards a Tool Explaining Ambiguity Sources",
                     "Authors": "Benedikt Gleich, Oliver Creighton, Leonid Kof",
