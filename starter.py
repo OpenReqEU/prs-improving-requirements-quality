@@ -7,7 +7,7 @@ from flask_cors import CORS
 
 from app.requirement_improver import RequirementChecker
 
-amb_api = Flask(__name__, template_folder='./demos/iframe/templates', static_folder='./demos/iframe/static')
+amb_api = Flask(__name__, template_folder='./demos/iframe/static', static_folder='./demos/iframe/static')
 
 CORS(amb_api)  # So we can run and test locally. May be production necessary as well.
 
@@ -72,12 +72,13 @@ def get_config(json_data):
 
 # These initial routes are to enable the demo to function properly.
 # You can remove these these routes if you do not need the demo.
-@amb_api.route('/')
-@amb_api.route('/<requirement>')
-@amb_api.route('/index/<requirement>')
-def index(requirement=None):
-    # Render page with ambiguities labelled
-    return render_template('index.html')
+# IMPORTANT NOTE: This route is no longer functional. Please use provided demos.
+# @amb_api.route('/')
+# @amb_api.route('/<requirement>')
+# @amb_api.route('/index/<requirement>')
+# def index(requirement=None):
+#     # Render page with ambiguities labelled
+#     return render_template('index.html')
 
 
 # This is the main route for checking requirement(s) quality

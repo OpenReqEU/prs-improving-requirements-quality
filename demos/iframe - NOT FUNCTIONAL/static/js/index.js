@@ -54,27 +54,21 @@ $(document).ready(function () {
     // If sentence has no period at the end, it will not be caught, so add it
     if (sentences.length === 0) {sentences = [text]}
     // Assign the URL to use, local-host or the actual deployment
-    // let url = "http://0.0.0.0:9799/check-all";
-    let url = "http://217.172.12.199:9799/check-all";
+    let url = "http://0.0.0.0:9799/check-quality";
+    // let url = "http://217.172.12.199:9799/check-quality";
 
     // Create request data using OpenReq JSON format, and the sentences provided
     let requestData = {
-        "requirements": [{
-            "id": 0,
-            "elements": [],
-            "status": "new",
-            "created_at": 0
-        }]
-    };
+        "requirements": [
+        ]
+    }
 
     // Loop over all sentences, push them to requestData one at a time
     $.each(sentences, function (index, sentence) {
         sentence = sentence.replace(/^\s+/g, '');  // Strip whitespace left by regular expression
-        requestData["requirements"][0]["elements"].push({
+        requestData["requirements"].push({
             "id": index,
-            "name": "sentence",
-            "text": sentence,
-            "created_at": 0
+            "text": sentence
         });
     });
 
@@ -97,6 +91,8 @@ $(document).ready(function () {
         // So, the response is to be unpacked with the assumption that everything is stored under the ID 0
         data = data["0"];
 
+        console.log(data)
+
         function indexCharacters(text) {
             let letters = text.split('');
             let htmlElements = '';
@@ -117,9 +113,6 @@ $(document).ready(function () {
         }
 
         function highlightCharacters() {
-            // TODO: Create legend for highlighting.
-            // TODO: Clean up code before it's too late.
-
             const borderRadius = '5px';
             const highlightSpacingLeft = '5px';
             const highlightSpacingRight = '2px';
@@ -237,7 +230,7 @@ $(document).ready(function () {
 
             $('#ambiguity-counts').html(htmlText);
         }
-
+        console.log(text)
         indexCharacters(text);
         ambStats = highlightCharacters();
         showLegend(ambStats);
