@@ -62,8 +62,7 @@ Run the following command to update the requirements.txt before pushing to GIT:
 1. `venv/bin/pip freeze > requirements.txt`
 2. Remove `en-core-web-sm==2.0.0` from requirements.txt
 
-NOTE: If you run `pip freeze > requirements.txt` from a normal terminal, you will include all global packages, 
-creating a bloated file. Please only use this command from a virtual environment where you are certain of the packages.
+NOTE: If you run `pip freeze > requirements.txt` from a normal terminal, you will include all global packages, creating a bloated file. Please only use this command from a virtual environment where you are certain of the packages.
 
 #### Running Tests
 

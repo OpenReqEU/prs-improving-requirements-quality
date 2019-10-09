@@ -15,7 +15,7 @@ msgpack==0.6.1
 msgpack-numpy==0.4.1
 msgpack-python==0.5.6
 murmurhash==0.28.0
-nltk==3.4
+nltk==3.4.5
 numpy==1.14.3
 pathlib==1.0.1
 pep8==1.7.1
@@ -34,5 +34,5 @@ thinc==6.10.2
 toolz==0.9.0
 tqdm==4.23.3
 ujson==1.35
-Werkzeug==0.14.1
+Werkzeug==0.16.0
 wrapt==1.10.11
