@@ -1,5 +1,5 @@
 [run]
-omit = coverage-reports/*, demos/*, tests/*, venv/*
+omit = coverage-reports/*, demos/*, tests/*, venv/*, test_all.py
 
 [html]
 directory = coverage-reports/html

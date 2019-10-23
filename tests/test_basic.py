@@ -42,12 +42,14 @@ class TestBasic(unittest.TestCase):
         response = self._call_check_quality('This is actually a good requirement.')
         self.assertEqual(response._status_code, 200, msg='API should be responsive with 200 status code')
 
-    def test_responsive_html_ui(self):
-        # Test if html ui is responding to a proper request
-        response = self.amb_api.get(
-            '/',
-            follow_redirects=True)
-        self.assertEqual(response._status_code, 200, msg='API should be responsive with 200 status code')
+    # This no longer functions since we longer offer an html UI this way.
+    # The API doesn't serve HTML pages anymore
+    # def test_responsive_html_ui(self):
+    #     # Test if html ui is responding to a proper request
+    #     response = self.amb_api.get(
+    #         '/',
+    #         follow_redirects=True)
+    #     self.assertEqual(response._status_code, 200, msg='API should be responsive with 200 status code')
 
     def test_api_error_handling_empty_body(self):
         # Check if requests reject when "doc" is not in body
