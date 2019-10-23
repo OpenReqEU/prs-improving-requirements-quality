@@ -10,3 +10,4 @@ output = coverage-reports/coverage.xml
 [report]
 exclude_lines =
     if __name__ == .__main__.:
+    if self.is_logging:

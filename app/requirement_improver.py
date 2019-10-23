@@ -52,7 +52,7 @@ class RequirementChecker:
 
     LEXICON_LOCATION = './app/lexicons'
 
-    def __init__(self, reqs, config=None, is_logging=True):
+    def __init__(self, reqs, config=None, is_logging=False):
         self.reqs = reqs
         self.config = config if config else {}
         self.nlp = spacy.load('en')
@@ -99,7 +99,6 @@ class RequirementChecker:
             
             for alg_name in algs_to_remove:
                 del self.amb_algs[alg_name]
-
 
     def _get_ambiguity_object(self, amb_obj, *, text, index_start, index_end):
         return {
@@ -159,7 +158,6 @@ class RequirementChecker:
                         split = req_truple.split('°')
                         return len(split[1]) + len(split[2]) + 2
                     except:
-                        # TODO Needs investigation on the visualization of this change. If the above fails, something still needs to be fixed
                         return 0
 
                 # Calculate space added by tokenization process
@@ -275,55 +273,6 @@ class RequirementChecker:
                         index_end = sentence_start_index + new_indexes[1]
                     ))
 
-        # # Load nominalization suffix lexicon
-        # lex_nominals = json.load(open(f'{self.LEXICON_LOCATION}/ambiguity_nominalization.json', encoding = "utf-8"))
-
-        # # Find and save ambiguities
-        # ambs_found = {}
-        # # For each requirement sent
-        # for req_i, req in enumerate(self.reqs):
-        #     # if req_i % 500 == 0:
-        #     #     print(f'check_nominals: {req_i} of {len(self.reqs)} at {str(datetime.datetime.now()).split(".")[0]}')
-        #     ambs_found[req.id] = []
-        #     # Go over all phrases in lexicon
-        #     for _, amb_obj in lex_nominals.items():
-        #         # Convert requirement into nlp doc
-        #         doc = self.nlp(req.text)
-        #         # Generate a list of gerund nouminalizations that have pos VB
-        #         nominalizations = [[t for t in token.subtree] for token in doc
-        #                            if(token.text[-3:] in amb_obj['gerund']
-        #                               or token.text[-4:] in amb_obj['gerund_plural'])
-        #                              and token.tag_ == 'VBG'
-        #                              and token.dep_ not in ('root', 'aux', 'advmod', 'compound', 'acl')
-        #                              and doc[token.i - 1].dep_ != 'aux'
-        #                              and token.text.lower() not in amb_obj['rule_exceptions']]
-
-        #         # Generate a list of nominalizations with pos NN based on suffixes
-        #         nouns = [token for token in doc if (token.lemma_[-4:] in amb_obj['suffixes_len4']
-        #                                             or token.lemma_[-3:] in amb_obj['suffixes_len3']
-        #                                             or token.lemma_[-2:] in amb_obj['suffixes_len2'])
-        #                  and token.tag_ in ('NN', 'NNS')
-        #                  and wn.synsets(token.text)]
-        #         # Filter list of nouns based on semantic hierarchy
-        #         for token in nouns:
-        #             # Generate and flatten the list of hypernyms for each noun
-        #             hypernyms = list(
-        #                 map(lambda x: x.name().split('.')[0],
-        #                     sum(wn.synsets(token.text)[0].hypernym_paths(), [])))
-        #             # Only consider nouns that express an event or a process
-        #             if [l for l in hypernyms if l in ['event', 'process', 'act']] \
-        #                     and token.text.lower() not in amb_obj['rule_exceptions']:
-        #                 nominalizations.append([t for t in token.subtree])
-
-        #         # Return all ambiguous nominalization sequences found
-        #         for token_seq in nominalizations:
-        #             if token_seq:
-        #                 new_text = ' '.join([t.text for t in token_seq])
-        #                 new_indexes = [token_seq[0].idx, token_seq[-1].idx + len(token_seq[-1].text)]
-        #                 ambs_found[req.id].append(
-        #                     self._get_ambiguity_object(amb_obj, new_text=new_text, new_indexes=new_indexes))
-        # return ambs_found
-
     def run_algs(self):
 
         # Find and save ambiguities
@@ -331,11 +280,10 @@ class RequirementChecker:
         # For each requirement sent
         for req_i, req in enumerate(self.reqs):
 
-            # Logging - Start
+            # Logging
             if self.is_logging:
                 req_time_start = time.time()
                 print(f'\nReq {req_i + 1} of {len(self.reqs)}')
-            # Logging - End
 
             # Put space aside for ambiguities found, even if none exist
             ambs_found[req.id] = []
@@ -358,18 +306,22 @@ class RequirementChecker:
                     # Run the algorithm attached to the object
                     amb_alg['func'](ambs_found, amb_alg['lexicon'], req, sentence, sentence_start_index, doc)
 
-            # Logging - Start
+            # Logging
             if self.is_logging:
                 print(f'Req Running Time: {time.time() - req_time_start:.2f} sec')
-            # Logging - End
 
         return ambs_found
 
-
     def check_quality(self):
 
-        total_time_start = time.time()
+        # Logging
+        if self.is_logging:
+            total_time_start = time.time()
+
         ambs_found = self.run_algs()
-        print(f'\nTotal Running Time: {time.time() - total_time_start:.2f} sec\n')
+
+        # Logging
+        if self.is_logging:
+            print(f'\nTotal Running Time: {time.time() - total_time_start:.2f} sec\n')
 
         return ambs_found
