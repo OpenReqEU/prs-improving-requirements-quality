@@ -1,6 +1,6 @@
 {
     "passive_ambiguity" : {
-        "title"         : "Passive Ambiguity",
+        "title"         : "Passive Voice Ambiguity",
         "description"   : "Authors should state requirements in active form, as passive conceals who is responsible for the action.",
         "regexp"        : "\\b\\w+?°V[^°]*°be (\\W[^°]+?°(?!VB.)[^°]*°[^ ]+?)* \\W\\w+?°VBN°\\w+",
         "lit_reference"  : "GCK10",
