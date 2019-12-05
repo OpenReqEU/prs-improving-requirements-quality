@@ -1,6 +1,7 @@
 # OpenReq - Improving Requirements Quality  
 
 ![EPL 2.0](https://img.shields.io/badge/License-EPL%202.0-blue.svg "EPL 2.0")
+[![Quality Gate Status](http://217.172.12.199/sonarqube/api/project_badges/measure?project=prs-improving-requirements-quality&metric=alert_status)](http://217.172.12.199/sonarqube/dashboard?id=prs-improving-requirements-quality)
 
 This component was created as a result of the OpenReq project funded by the European Union Horizon 2020 Research and 
 Innovation programme under grant agreement No 732463.
