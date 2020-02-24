@@ -16,37 +16,36 @@ wn.ensure_loaded()
 
 
 class RequirementChecker:
-
     LITERATURE_DICT = {
-        "NOVEL1" : {
+        "NOVEL1": {
             "Title": "",
             "Authors": "",
             "Order": 0
         },
-        "NOVEL2" : {
+        "NOVEL2": {
             "Title": "",
             "Authors": "",
             "Order": 1
         },
-        "YWRN10" : {
-                    "Title": "Automatic detection of nocuous coordination ambiguities in natural language requirements",
-                    "Authors": "Hui Yang, Alistair Willis, Anne N. De Roeck, B. Nuseibeh",
-                    "Order": 2
+        "YWRN10": {
+            "Title": "Automatic detection of nocuous coordination ambiguities in natural language requirements",
+            "Authors": "Hui Yang, Alistair Willis, Anne N. De Roeck, B. Nuseibeh",
+            "Order": 2
         },
-        "FFJK14" : {
-                    "Title": "Rapid Requirements Checks with Requirements Smells: Two Case Studies",
-                    "Authors": "Henning Femmer, Daniel Méndez Fernándeza, Elmar Juergens, Michael Klose, Ilona Zimmer, Jörg Zimmer",
-                    "Order": 3
+        "FFJK14": {
+            "Title": "Rapid Requirements Checks with Requirements Smells: Two Case Studies",
+            "Authors": "Henning Femmer, Daniel Méndez Fernándeza, Elmar Juergens, Michael Klose, Ilona Zimmer, Jörg Zimmer",
+            "Order": 3
         },
-        "GCK10" : {
-                    "Title": "Ambiguity Detection: Towards a Tool Explaining Ambiguity Sources",
-                    "Authors": "Benedikt Gleich, Oliver Creighton, Leonid Kof",
-                    "Order": 4
+        "GCK10": {
+            "Title": "Ambiguity Detection: Towards a Tool Explaining Ambiguity Sources",
+            "Authors": "Benedikt Gleich, Oliver Creighton, Leonid Kof",
+            "Order": 4
         },
-        "TB13" : {
-                    "Title": "The Design of SREE — A Prototype Potential Ambiguity Finder for Requirements Specifications and Lessons Learned",
-                    "Authors": "Sri Fatimah Tjong, Daniel M. Berry",
-                    "Order": 5
+        "TB13": {
+            "Title": "The Design of SREE — A Prototype Potential Ambiguity Finder for Requirements Specifications and Lessons Learned",
+            "Authors": "Sri Fatimah Tjong, Daniel M. Berry",
+            "Order": 5
         }
     }
 
@@ -76,12 +75,12 @@ class RequirementChecker:
             'CompoundNouns': {
                 'config_name': 'CompoundNouns',
                 'func': self._check_compounds,
-                'lexicon': json.load(open(f'{self.LEXICON_LOCATION}/lex_compounds.json', encoding = 'utf-8'))
+                'lexicon': json.load(open(f'{self.LEXICON_LOCATION}/lex_compounds.json', encoding='utf-8'))
             },
             'Nominalization': {
                 'config_name': 'Nominalization',
                 'func': self._check_nominals,
-                'lexicon': json.load(open(f'{self.LEXICON_LOCATION}/lex_nominals.json', encoding = "utf-8"))
+                'lexicon': json.load(open(f'{self.LEXICON_LOCATION}/lex_nominals.json', encoding="utf-8"))
             }
         }
         self._apply_config()
@@ -96,18 +95,18 @@ class RequirementChecker:
             self.config['algorithms'] = list(acceptable_amb_algs.intersection(set(self.config['algorithms'])))
             # Find the algorithms the user did not select
             algs_to_remove = acceptable_amb_algs.difference(self.config['algorithms'])
-            
+
             for alg_name in algs_to_remove:
                 del self.amb_algs[alg_name]
 
     def _get_ambiguity_object(self, amb_obj, *, text, index_start, index_end):
         return {
-            "title"             : amb_obj['title'],
-            "description"       : amb_obj['description'],
+            "title": amb_obj['title'],
+            "description": amb_obj['description'],
             "language_construct": amb_obj['language_construct'],
-            "text"              : text,
-            "index_start"       : index_start,
-            "index_end"         : index_end
+            "text": text,
+            "index_start": index_start,
+            "index_end": index_end
         }
 
     def _check_lexical(self, ambs_found, lexicon, req, sentence, sentence_start_index, doc):
@@ -116,9 +115,26 @@ class RequirementChecker:
             phrase = phrase.replace(' ', '\s')
 
             try:
-                return re.compile(r'\b{0}\b'.format(phrase), flags=re.I|re.X)
+                return re.compile(r'\b{0}\b'.format(phrase), flags=re.I | re.X)
             except re.error:
-                return re.compile(r'\b\{0}\b'.format(phrase), flags=re.I|re.X)
+                return re.compile(r'\b\{0}\b'.format(phrase), flags=re.I | re.X)
+
+        def is_userstory(txt):
+            """ checks weather given sentence confirms to user-story template"""
+            x = re.findall("^As [an|a]", txt)
+            y = re.findall(", [Ii] want to", txt)
+            if (x) and (y):
+                return True
+            else:
+                return False
+
+        def is_self_pronoun(txt):
+            """ checks weather given word is of any first-person-form"""
+            x = re.matc("i|my|mine|myselfe|me", txt)
+            if (x):
+                return True
+            else:
+                return False
 
         # For each phrase in the lexicon
         for _, amb_obj in lexicon.items():
@@ -126,25 +142,28 @@ class RequirementChecker:
             for word_phrase in amb_obj['lexicon']:
                 # Search for all word phrases in sentence
                 for match in re.finditer(whole_phrase_regexp(word_phrase), sentence):
-                    ambs_found[req.id].append(self._get_ambiguity_object(
-                        amb_obj, 
-                        text = match[0],
-                        index_start = sentence_start_index + match.start(),
-                        index_end = sentence_start_index + match.end()
-                    ))
+                    # Throws out all lexical errors from final result list
+                    # that had been wrongly detected because of misunderstanding of the user-story structure
+                    if not is_userstory(sentence) and not is_self_pronoun(amb_obj):
+                        ambs_found[req.id].append(self._get_ambiguity_object(
+                            amb_obj,
+                            text=match[0],
+                            index_start=sentence_start_index + match.start(),
+                            index_end=sentence_start_index + match.end()
+                        ))
 
     def _check_regexs(self, ambs_found, lexicon, req, sentence, sentence_start_index, doc):
         # Go over all regular expressions in lexicon
         for _, amb_obj in lexicon.items():
             # Create Python regular expression object
-            regexp = re.compile(amb_obj['regexp'], flags=re.I|re.X)
+            regexp = re.compile(amb_obj['regexp'], flags=re.I | re.X)
             # Search for all regexps in requirement
             for match in re.finditer(regexp, sentence):
                 ambs_found[req.id].append(self._get_ambiguity_object(
                     amb_obj,
-                    text = match[0],
-                    index_start = sentence_start_index + match.start(),
-                    index_end = sentence_start_index + match.end()
+                    text=match[0],
+                    index_start=sentence_start_index + match.start(),
+                    index_end=sentence_start_index + match.end()
                 ))
 
     def _check_posregexs(self, ambs_found, lexicon, req, sentence, sentence_start_index, doc):
@@ -179,9 +198,11 @@ class RequirementChecker:
                 # Update the 'up_to_index' to reflect the newly discovered mistakes
                 up_to_index = up_to_index - extra_truple_indexes
                 # Calculate the extra indexes added by the tokenizing process
-                extra_tokenize_space = count_tokenize_space(req_original_string[:up_to_index], req_tokenized_string[:up_to_index])
+                extra_tokenize_space = count_tokenize_space(req_original_string[:up_to_index],
+                                                            req_tokenized_string[:up_to_index])
 
                 return extra_truple_indexes + extra_tokenize_space
+
             return (
                 match.start() - count_extra_indexes(match.start()),
                 match.end() - count_extra_indexes(match.end()))
@@ -197,7 +218,7 @@ class RequirementChecker:
         # Check against each regular expression in the lexicon
         for _, amb_obj in lexicon.items():
             # Create Python regular expression object
-            regexp = re.compile(amb_obj['regexp'], flags=re.I|re.X)
+            regexp = re.compile(amb_obj['regexp'], flags=re.I | re.X)
             # Search for all regexps in requirement
             for match in re.finditer(regexp, req_truple_string):
                 # Get the original indexes, since the truple string design messes with them
@@ -208,9 +229,9 @@ class RequirementChecker:
                 # Save this found ambiguity
                 ambs_found[req.id].append(self._get_ambiguity_object(
                     amb_obj,
-                    text = orig_text,
-                    index_start = sentence_start_index + orig_indexes[0],
-                    index_end = sentence_start_index + orig_indexes[1]
+                    text=orig_text,
+                    index_start=sentence_start_index + orig_indexes[0],
+                    index_end=sentence_start_index + orig_indexes[1]
                 ))
 
     def _check_compounds(self, ambs_found, lexicon, req, sentence, sentence_start_index, doc):
@@ -218,38 +239,38 @@ class RequirementChecker:
         for _, amb_obj in lexicon.items():
             for chunk in doc.noun_chunks:
                 compound_list = [token for token in chunk if (token.dep_ == 'compound')
-                                    or (token.tag_ in ('NN', 'NNS', 'NNP', 'NNPS') and token.dep_ in ('nmod', 'amod'))
-                                    or (token.tag_ == 'VBG' and token.dep_ == 'nmod')
-                                    or token == chunk.root]
+                                 or (token.tag_ in ('NN', 'NNS', 'NNP', 'NNPS') and token.dep_ in ('nmod', 'amod'))
+                                 or (token.tag_ == 'VBG' and token.dep_ == 'nmod')
+                                 or token == chunk.root]
                 if len(compound_list) > 2:
                     new_text = ' '.join([t.text for t in compound_list])
                     new_indexes = [compound_list[0].idx, compound_list[-1].idx + len(compound_list[-1].text)]
                     ambs_found[req.id].append(self._get_ambiguity_object(
                         amb_obj,
-                        text = new_text,
-                        index_start = sentence_start_index + new_indexes[0],
-                        index_end = sentence_start_index + new_indexes[1]
+                        text=new_text,
+                        index_start=sentence_start_index + new_indexes[0],
+                        index_end=sentence_start_index + new_indexes[1]
                     ))
 
     def _check_nominals(self, ambs_found, lexicon, req, sentence, sentence_start_index, doc):
         # Go over all phrases in lexicon
         for _, amb_obj in lexicon.items():
-            
+
             # Generate a list of gerund nouminalizations that have pos VB
             nominalizations = [[t for t in token.subtree] for token in doc
-                            if(token.text[-3:] in amb_obj['gerund']
-                                or token.text[-4:] in amb_obj['gerund_plural'])
-                                and token.tag_ == 'VBG'
-                                and token.dep_ not in ('root', 'aux', 'advmod', 'compound', 'acl')
-                                and doc[token.i - 1].dep_ != 'aux'
-                                and token.text.lower() not in amb_obj['rule_exceptions']]
+                               if (token.text[-3:] in amb_obj['gerund']
+                                   or token.text[-4:] in amb_obj['gerund_plural'])
+                               and token.tag_ == 'VBG'
+                               and token.dep_ not in ('root', 'aux', 'advmod', 'compound', 'acl')
+                               and doc[token.i - 1].dep_ != 'aux'
+                               and token.text.lower() not in amb_obj['rule_exceptions']]
 
             # Generate a list of nominalizations with pos NN based on suffixes
             nouns = [token for token in doc if (token.lemma_[-4:] in amb_obj['suffixes_len4']
                                                 or token.lemma_[-3:] in amb_obj['suffixes_len3']
                                                 or token.lemma_[-2:] in amb_obj['suffixes_len2'])
-                    and token.tag_ in ('NN', 'NNS')
-                    and wn.synsets(token.text)]
+                     and token.tag_ in ('NN', 'NNS')
+                     and wn.synsets(token.text)]
             # Filter list of nouns based on semantic hierarchy
             for token in nouns:
                 # Generate and flatten the list of hypernyms for each noun
@@ -268,9 +289,9 @@ class RequirementChecker:
                     new_indexes = [token_seq[0].idx, token_seq[-1].idx + len(token_seq[-1].text)]
                     ambs_found[req.id].append(self._get_ambiguity_object(
                         amb_obj,
-                        text = new_text,
-                        index_start = sentence_start_index + new_indexes[0],
-                        index_end = sentence_start_index + new_indexes[1]
+                        text=new_text,
+                        index_start=sentence_start_index + new_indexes[0],
+                        index_end=sentence_start_index + new_indexes[1]
                     ))
 
     def run_algs(self):
