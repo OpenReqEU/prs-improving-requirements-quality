@@ -4,7 +4,11 @@ COPY . .
 # .dockerignore lists what should not be copied
 
 # Install all Python dependencies requirements
-RUN pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r requirements.txt
+RUN pip install -r requirements.txt
+
+# Testing docker issues
+RUN nslookup pypi.org
+
 # Install NLP library resouces
 RUN python -m nltk.downloader wordnet
 RUN python -m nltk.downloader punkt
