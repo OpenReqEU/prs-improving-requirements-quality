@@ -50,7 +50,6 @@ function handleFileSelect(evt) {
 function getDataFromAPI(reqs) {
 
     // Assign the URL to use, local-host or the actual deployment
-    // const url = "http://217.172.12.199:9799/check-quality";
     const url = "http://0.0.0.0:9799/check-quality";
 
     let responses = [];
@@ -120,15 +119,15 @@ function processResponse(reqs, response) {
     }
 
     var amb_counts = {
-        'Ambiguous Adverb or Adjective': 0,
-        'Comparatives and Superlatives': 0,
-        'Coordination': 0,
-        'Negative Statement': 0,
-        'Subjective Language': 0,
-        'Vague Pronoun': 0,
-        'Compound Noun': 0,
-        'Nominalization': 0,
-        'Other / Misc': 0,
+        'Ambiguous Adverb or Adjective' : 0,
+        'Comparatives and Superlatives' : 0,
+        'Coordination' : 0,
+        'Negative Statement' : 0,
+        'Subjective Language' : 0,
+        'Vague Pronoun' : 0,
+        'Compound Noun' : 0,
+        'Nominalization' : 0,
+        'Other / Misc' : 0,
     };
     const amb_key = 'language_construct';
     $.each(response, function (req_index, ambiguities) {
@@ -165,7 +164,7 @@ function processResponse(reqs, response) {
         </div>`;
 
     // Add HTML to page
-    $('#ambiguity-counts').html(htmlElements);
+    $('#ambiguity-smell-counts').html(htmlElements);
 }
 
 function indexCharacters(reqIndex, lineIndex, text) {
@@ -203,138 +202,7 @@ function indexCharacters(reqIndex, lineIndex, text) {
 
 }
 
-
-function highlightCharacters(lineIndex, ambiguities) {
-
-    // Variables that dictate styling
-    const borderRadius = "5px";
-    const highlightSpacingLeft = "5px";
-    const highlightSpacingRight = "2px";
-    const highlightMarginLeft = "-2px";
-
-    var totalAmbCount = ambiguities.length;
-    var visibleAmbCount = 0;
-    var visibleAmbs = [];
-
-    // For each ambiguity object sent
-    $.each(ambiguities, function (amb_index, ambiguityData) {
-
-        let ambIndexStart = ambiguityData["index_start"];
-        let ambIndexEnd = ambiguityData["index_end"];
-
-        // Check if this ambiguity overlaps with an existing one
-        for (let charID = ambIndexStart; charID < ambIndexEnd; charID++) {
-            let ambChar = $(`[id="charID_${lineIndex}_${charID}"]`);
-            if (ambChar.css('background-color') !== 'rgb(255, 255, 255)') {
-                return;  // Then this ambiguity overlaps with another, go to the next ambiguity
-            }
-        }
-        visibleAmbCount++;
-        visibleAmbs.push(ambiguityData);
-
-        // Set the color of the ambiguity based on the existing ones, or create a new one, or default
-        let color = colorChoices[ambiguityData["title"]] || availableColors.pop() || '#ffff00';
-        colorChoices[ambiguityData["title"]] = color;
-
-        // Apply css to each letter in the found ambiguity
-        for (let charID = ambIndexStart; charID < ambIndexEnd; charID++) {
-
-            let ambChar = $(`[id="charID_${lineIndex}_${charID}"]`);
-            ambChar.css("background-color", color);
-
-            // Round the corners of the edges
-            if (charID === ambIndexStart) {
-                ambChar.css("border-top-left-radius", borderRadius);
-                ambChar.css("border-bottom-left-radius", borderRadius);
-                ambChar.css("margin-left", highlightSpacingLeft);
-                ambChar.css("padding-left", highlightSpacingLeft);
-                ambChar.css("margin-left", highlightMarginLeft);
-            } else if (charID === ambIndexEnd-1) {
-                ambChar.css("border-top-right-radius", borderRadius);
-                ambChar.css("border-bottom-right-radius", borderRadius);
-                ambChar.css("margin-right", highlightSpacingRight);
-                ambChar.css("padding-right", highlightSpacingRight);
-            } else {
-
-            }
-        }
-    });
-
-    return {
-        "totalAmbCount": totalAmbCount,
-        "visibleAmbCount": visibleAmbCount,
-        "visibleAmbs": visibleAmbs
-    }
-}
-
-
-function showLegend(ambStats) {
-
-    let visibleAmbs = [];
-
-    $.each(ambStats, function (index, ambStat) {
-        visibleAmbs = visibleAmbs.concat(ambStat.visibleAmbs)
-    });
-
-    // Get a set of all of the ambiguities. This eliminates duplicates
-    let ambiguities = {};
-    $.each(visibleAmbs, function (index, visibleAmb) {
-        ambiguities[visibleAmb["title"]] = visibleAmb
-    });
-
-    // Apply the effects
-    let legend1 = $("#legend1");
-    let legend2 = $("#legend2");
-
-    let index = 0;
-    $.each(ambiguities, function (ambiguityTitle, ambiguityData) {
-        let legend = null;
-        if (index < Object.keys(ambiguities).length / 2) {
-            legend = legend1
-        } else {
-            legend = legend2
-        }
-        index++;
-
-        let title = ambiguityData["title"];
-        let color = colorChoices[title];
-        let description = ambiguityData["description"];
-        let htmlElement = `
-            <div style="background-color:${color}" class="box"></div>
-            <div class="explanationTitle" style="background-color:${color}">${title}</div>
-            <div class="explanation">${description}</div>
-            <br>`;
-        legend.append(htmlElement);
-    });
-}
-
-
-function showAmbiguityCounts(ambStats) {
-
-    // Compute totals from individual ambiguity stats
-    let totalAmbCount = 0;
-    let visibleAmbCount = 0;
-    for (i=0;i<ambStats.length;i++) {
-        totalAmbCount += ambStats[i].totalAmbCount;
-        visibleAmbCount += ambStats[i].visibleAmbCount;
-    }
-
-    // Create display string
-    htmlText =
-        'To increase readability, overlapping ambiguities are hidden. ' +
-        'Once the existing ambiguities are addressed and no longer highlighted, the hidden ambiguities will become visible.' +
-        '<br/>&nbsp&nbsp&nbsp&nbsp Total Ambiguities &nbsp&nbsp&nbsp&nbsp: ' + totalAmbCount +
-        '<br/>&nbsp&nbsp&nbsp&nbsp Visible Ambiguities &nbsp: ' + visibleAmbCount +
-        '<br/>&nbsp&nbsp&nbsp&nbsp Hidden Ambiguities  : ' + (totalAmbCount-visibleAmbCount);
-
-    // Add HTML to page
-    $('#ambiguity-counts').html(htmlText);
-}
-
-
 $(document).ready(function () {
     document.getElementById('upload').addEventListener('change', handleFileSelect, false);
 });
-
-
 

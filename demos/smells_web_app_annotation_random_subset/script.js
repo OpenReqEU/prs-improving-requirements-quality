@@ -50,7 +50,6 @@ function handleFileSelect(evt) {
 function getDataFromAPI(reqs) {
 
     // Assign the URL to use, local-host or the actual deployment
-    // const url = "http://217.172.12.199:9799/check-quality";
     const url = "http://0.0.0.0:9799/check-quality";
 
     let responses = [];
@@ -103,13 +102,48 @@ function getDataFromAPI(reqs) {
         });
 }
 
+function getXofaSmell(AllSmells, smellKey, samplePercent) {
+    let randomProperty = function(obj) {
+        const keys = Object.keys(obj)
+        const randomKey = keys[ keys.length * Math.random() << 0]
+        const randomProp = obj[randomKey]
+        delete obj[randomKey]
+        return [randomKey, randomProp];
+    };
+
+    subsetSmells = {}
+    let subsetCount = 0
+
+    // Cut the smells down to just smellKey and one per requirement
+    $.each(AllSmells, function (lineIndex, ambiguities) {
+        $.each(ambiguities, function (ambIndex, amb) {
+            if (amb['language_construct'] === smellKey) {
+                if (!(lineIndex in subsetSmells)) {
+                    subsetSmells[lineIndex] = [amb]
+                }
+                subsetCount++
+                // return false;  // Break out of loop, we only want one of each amb per requirement
+            }
+        });
+    });
+
+    // Pick a subset (samplePercent) of the overall smells
+    console.log(samplePercent)
+    console.log(subsetCount)
+    console.log(Object.keys(subsetSmells).length)
+    sampleAmount = Math.floor(subsetCount * samplePercent)
+
+    randomSample = {}
+    for (let i = 0; i < sampleAmount; i++) {
+        let randomSmell = randomProperty(subsetSmells)
+        randomSample[randomSmell[0]] = randomSmell[1]
+    }
+
+    return randomSample
+}
+
 
 function processResponse(reqs, response) {
-
-    let wordCount = 0;
-    for (var i = 0; i < reqs.length; i++) {
-        wordCount += reqs[i].split(' ').length;
-    }
 
     function addHeader(number) {
         $("#annotatedRequirements").append(`
@@ -119,53 +153,34 @@ function processResponse(reqs, response) {
         `);
     }
 
-    var amb_counts = {
-        'Ambiguous Adverb or Adjective': 0,
-        'Comparatives and Superlatives': 0,
-        'Coordination': 0,
-        'Negative Statement': 0,
-        'Subjective Language': 0,
-        'Vague Pronoun': 0,
-        'Compound Noun': 0,
-        'Nominalization': 0,
-        'Other / Misc': 0,
-    };
-    const amb_key = 'language_construct';
-    $.each(response, function (req_index, ambiguities) {
+    let ambStats = [];
+    let reqIndex = 0;
+    let useCaseNumber = 0;
 
-        $.each(ambiguities, function (amb_index, amb) {
-            if (amb[amb_key] in amb_counts) {
-                amb_counts[amb[amb_key]] += 1;
-            } else {
-                amb_counts[amb[amb_key]] = 1;
-                console.log('Missing Language Construct: '+amb[amb_key])
-            }
-        });
+    // Randomly cut the total ambiguities down to X per smell
+    const samplePercent = 0.1
+    // const smellKey = 'S1: Adverb or Adjective'
+    // const smellKey = 'S2: Comparative or Superlative'
+    // const smellKey = 'S4: Coordination'
+    // const smellKey = 'S5: Negative Statement'
+    // const smellKey = 'S7: Subjective Language'
+    // const smellKey = 'S8: Vague Pronoun'
+    // const smellKey = 'S3: Compound Noun'
+    const smellKey = 'S6: Nominalisation'
+    response = getXofaSmell(response, smellKey, samplePercent)
+
+    addHeader(useCaseNumber++);
+    $.each(response, function (lineIndex, ambiguities) {
+
+        if (indexCharacters(reqIndex, lineIndex, reqs[lineIndex]))
+            reqIndex++;
+        else
+            addHeader(useCaseNumber++);
+        ambStats.push(highlightCharacters(lineIndex, ambiguities));
     });
 
-    let tableText = '';
-    console.log("Number of Requirements: " + Object.keys(response).length);
-    for (var key in amb_counts) {
-        console.log(key.padEnd(30, ' ') + " : " + amb_counts[key]);
-        tableText += `<tr><td>${key}</td><td>&nbsp&nbsp&nbsp:&nbsp&nbsp&nbsp${amb_counts[key]}</td></tr>`
-    }
-
-    // Create display string
-    htmlElements = `
-        <br/>
-        <h4># Requirements: ${Object.keys(response).length}</h4>
-        <h4># of Words: ${wordCount}</h4>
-        <table style="padding: 5px;">
-            <tr>
-                <th>Ambiguity Indicator</th>
-                <th>Count</th>
-              </tr>
-            ${tableText}
-        </table>
-        </div>`;
-
-    // Add HTML to page
-    $('#ambiguity-counts').html(htmlElements);
+    showLegend(ambStats);
+    showAmbiguityCounts(ambStats);
 }
 
 function indexCharacters(reqIndex, lineIndex, text) {
@@ -311,7 +326,7 @@ function showLegend(ambStats) {
 
 function showAmbiguityCounts(ambStats) {
 
-    // Compute totals from individual ambiguity stats
+    // Computer totals from individual ambiguity stats
     let totalAmbCount = 0;
     let visibleAmbCount = 0;
     for (i=0;i<ambStats.length;i++) {

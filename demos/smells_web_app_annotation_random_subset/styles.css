@@ -1,0 +1,33 @@
+body {
+    padding: 25px;
+    -webkit-print-color-adjust: exact;
+}
+
+textarea{
+    width: 100%;
+    font-size: 30px;
+}
+
+#row-ambiguity-result {
+    margin: 10px;
+    margin-top: 20px;
+}
+
+.explanationTitle {
+    font-size: larger;
+}
+
+mark {
+    padding: 0px;
+    margin-left: -2px;
+    margin-right: -2px;
+}
+
+.charSpace {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#ambiguity-counts {
+    padding: 0 45px 0 45px;
+}

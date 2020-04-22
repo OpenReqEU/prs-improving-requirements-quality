@@ -87,8 +87,8 @@ def check_quality():
     json_data = check_json_conformance()
     reqs = get_reqs(json_data)
     config = get_config(json_data)
-    return jsonify(RequirementChecker(reqs, config).check_quality())
+    return jsonify(RequirementChecker(reqs, config, is_logging=True).check_quality())
 
 
 if __name__ == "__main__":
-    amb_api.run(debug=True, host=CONFIG['HOST'], port=CONFIG['PORT'])
+    amb_api.run(debug=False, host=CONFIG['HOST'], port=CONFIG['PORT'])
