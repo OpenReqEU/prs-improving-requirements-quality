@@ -3,11 +3,11 @@ FROM python:3.6
 COPY . .
 # .dockerignore lists what should not be copied
 
-# Install all Python dependencies requirements
-RUN pip install -r requirements.txt
-
 # Testing docker issues
 RUN nslookup pypi.org
+
+# Install all Python dependencies requirements
+RUN pip install -r requirements.txt
 
 # Install NLP library resouces
 RUN python -m nltk.downloader wordnet
