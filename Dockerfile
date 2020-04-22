@@ -3,9 +3,6 @@ FROM python:3.6
 COPY . .
 # .dockerignore lists what should not be copied
 
-# Testing docker issues
-RUN nslookup pypi.org
-
 # Install all Python dependencies requirements
 RUN pip install -r requirements.txt
 
